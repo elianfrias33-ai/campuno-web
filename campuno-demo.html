@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campuno — Gastronomía del Campo Dominicano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde-monte: #2F3D26;
+    --verde-monte-oscuro: #1F2919;
+    --tierra: #6B4226;
+    --achiote: #C1440E;
+    --maiz: #E8B94B;
+    --hueso: #F0E9DC;
+    --hueso-claro: #F8F4EC;
+    --carbon: #1A1512;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--hueso);
+    color: var(--carbon);
+    font-family: 'Public Sans', sans-serif;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--achiote);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--carbon);
+    border-bottom: 2px solid var(--maiz);
+  }
+  nav .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: -0.01em;
+    color: var(--hueso-claro);
+  }
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--hueso-claro);
+  }
+  .nav-links a { border-bottom: 2px solid transparent; padding-bottom: 3px; transition: border-color 0.2s; }
+  .nav-links a:hover { border-color: var(--achiote); }
+  .nav-cta {
+    background: var(--achiote);
+    color: var(--hueso-claro);
+    padding: 10px 20px;
+    border-radius: 2px;
+    font-weight: 600;
+    font-size: 0.88rem;
+  }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  /* ===== HERO ===== */
+  .hero {
+    position: relative;
+    background: var(--verde-monte);
+    color: var(--hueso-claro);
+    padding: 100px 0 90px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(115deg, rgba(232,185,75,0.05) 0px, rgba(232,185,75,0.05) 2px, transparent 2px, transparent 26px);
+    pointer-events: none;
+  }
+  .hero .wrap { position: relative; }
+  .hero .eyebrow { color: var(--maiz); margin-bottom: 20px; display: block; }
+  .hero h1 {
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    max-width: 780px;
+    margin-bottom: 24px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--maiz);
+  }
+  .hero p.lede {
+    max-width: 520px;
+    font-size: 1.1rem;
+    color: rgba(240,233,220,0.85);
+    margin-bottom: 36px;
+  }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--achiote);
+    color: var(--hueso-claro);
+    padding: 15px 28px;
+    font-weight: 600;
+    border-radius: 2px;
+    display: inline-block;
+  }
+  .btn-secondary {
+    border: 2px solid var(--maiz);
+    color: var(--maiz);
+    padding: 13px 26px;
+    font-weight: 600;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  /* ===== GÜIRA DIVIDER — signature element ===== */
+  .guira-divider {
+    background: var(--carbon);
+    padding: 22px 0;
+    overflow: hidden;
+  }
+  .guira-track {
+    display: flex;
+    gap: 40px;
+    white-space: nowrap;
+    animation: scroll-guira 28s linear infinite;
+    width: max-content;
+  }
+  .guira-track span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--hueso);
+    opacity: 0.75;
+  }
+  .guira-track span::after { content: "◦ ◦ ◦"; margin-left: 40px; color: var(--maiz); }
+  @keyframes scroll-guira {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .guira-track { animation: none; }
+  }
+
+  /* ===== SOBRE NOSOTROS ===== */
+  .about {
+    padding: 100px 0;
+  }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+  .about h2 { font-size: 2.4rem; margin: 14px 0 22px; color: var(--verde-monte); }
+  .about p { color: #4a4238; margin-bottom: 16px; max-width: 480px; }
+  .about-facts {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 2px solid var(--carbon);
+  }
+  .fact {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(26,21,18,0.15);
+  }
+  .fact-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--verde-monte);
+    color: var(--maiz);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .fact-icon svg { width: 20px; height: 20px; }
+  .fact-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex: 1;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .fact-label { font-weight: 600; }
+  .fact-value { color: var(--achiote); font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; text-align: right; }
+  @media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
+
+  /* ===== MENU ===== */
+  .menu-section {
+    background: var(--verde-monte-oscuro);
+    color: var(--hueso-claro);
+    padding: 100px 0;
+  }
+  .menu-section .eyebrow { color: var(--maiz); }
+  .menu-section h2 { font-size: 2.4rem; margin: 14px 0 50px; max-width: 600px; }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: rgba(240,233,220,0.15);
+  }
+  .dish {
+    background: var(--verde-monte-oscuro);
+    padding: 32px;
+  }
+  .dish-name { font-family: 'Fraunces', serif; font-size: 1.35rem; font-weight: 600; margin-bottom: 8px; }
+  .dish-desc { color: rgba(240,233,220,0.7); font-size: 0.95rem; }
+  @media (max-width: 700px) { .menu-grid { grid-template-columns: 1fr; } }
+
+  /* ===== EXPERIENCE ===== */
+  .experience {
+    padding: 100px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .experience-visual {
+    aspect-ratio: 4/3;
+    background: var(--maiz);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .experience-visual svg { width: 55%; height: 55%; }
+  .experience h2 { font-size: 2.2rem; color: var(--verde-monte); margin-bottom: 20px; }
+  .experience p { color: #4a4238; margin-bottom: 16px; max-width: 460px; }
+  @media (max-width: 800px) { .experience { grid-template-columns: 1fr; } .experience-visual { order: -1; } }
+
+  /* ===== UBICACIÓN / CONTACTO ===== */
+  .contact {
+    background: var(--carbon);
+    color: var(--hueso-claro);
+    padding: 90px 0;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 60px;
+  }
+  .contact h2 { font-size: 2.2rem; margin-bottom: 24px; }
+  .contact-list { list-style: none; margin-top: 30px; }
+  .contact-list li {
+    padding: 16px 0;
+    border-top: 1px solid rgba(240,233,220,0.2);
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+  }
+  .contact-list li:last-child { border-bottom: 1px solid rgba(240,233,220,0.2); }
+  .contact-list .label { color: rgba(240,233,220,0.55); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .hours-box {
+    background: rgba(240,233,220,0.06);
+    border: 1px solid rgba(240,233,220,0.18);
+    border-radius: 4px;
+    padding: 32px;
+  }
+  .hours-box h3 { font-family: 'IBM Plex Mono', monospace; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--maiz); margin-bottom: 20px; font-weight: 500; }
+  .hours-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 0.92rem; color: rgba(240,233,220,0.85); }
+  @media (max-width: 800px) { .contact-grid { grid-template-columns: 1fr; } }
+
+  /* ===== FOOTER ===== */
+  footer {
+    background: var(--hueso);
+    padding: 30px 0;
+    text-align: center;
+    font-size: 0.82rem;
+    color: #8a8072;
+  }
+  footer strong { color: var(--carbon); }
+
+  .demo-badge {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    background: var(--achiote);
+    color: var(--hueso-claro);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    padding: 9px 14px;
+    border-radius: 3px;
+    z-index: 100;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">Campuno</div>
+    <div class="nav-links">
+      <a href="#sobre">Nosotros</a>
+      <a href="#menu">Menú</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#contacto">Ubicación</a>
+    </div>
+    <a href="tel:+18298163894" class="nav-cta">Reservar</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Santiago de los Caballeros — Villa Olga</span>
+    <h1>Gastronomía del<br><em>campo dominicano</em>,<br>servida en la ciudad.</h1>
+    <p class="lede">Sancocho, chivo con chenchén y bandera dominicana preparados como en el campo, en un espacio que honra a nuestros artesanos con cada detalle.</p>
+    <div class="hero-actions">
+      <a href="tel:+18298163894" class="btn-primary">Llamar para reservar</a>
+      <a href="#menu" class="btn-secondary">Ver el menú</a>
+    </div>
+  </div>
+</section>
+
+<div class="guira-divider">
+  <div class="guira-track">
+    <span>Toca la güira</span>
+    <span>Ponte el sombrero</span>
+    <span>Terraza al aire libre</span>
+    <span>Amplio parqueo</span>
+    <span>Toca la güira</span>
+    <span>Ponte el sombrero</span>
+    <span>Terraza al aire libre</span>
+    <span>Amplio parqueo</span>
+  </div>
+</div>
+
+<section class="about" id="sobre">
+  <div class="wrap about-grid">
+    <div>
+      <span class="eyebrow">Sobre Campuno</span>
+      <h2>Como comer en casa de la abuela, pero con mantel largo.</h2>
+      <p>Campuno nació para traer a la ciudad los sabores del campo dominicano tal como se cocinan allá: con tiempo, con fuego de leña en el alma, y con las manos de nuestra gente. Cada plato cuenta una región del país.</p>
+      <p>Trabajamos con artesanos dominicanos para la decoración y la vajilla, porque creemos que la mesa también debe contar quiénes somos.</p>
+    </div>
+    <div class="about-facts">
+      <div class="fact">
+        <div class="fact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 20h18M5 20V9l7-5 7 5v11M9 20v-6h6v6"/></svg>
+        </div>
+        <div class="fact-text"><span class="fact-label">Ambiente</span><span class="fact-value">Sala + terraza al aire libre</span></div>
+      </div>
+      <div class="fact">
+        <div class="fact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3c-3 3-4 5-4 8a4 4 0 008 0c0-3-1-5-4-8z"/><path d="M12 13v8"/></svg>
+        </div>
+        <div class="fact-text"><span class="fact-label">Especialidad</span><span class="fact-value">Cocina de campo dominicana</span></div>
+      </div>
+      <div class="fact">
+        <div class="fact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6M13.5 20c.3-2.4 2-4.4 4.3-4.9"/></svg>
+        </div>
+        <div class="fact-text"><span class="fact-label">Ideal para</span><span class="fact-value">Familias y grupos grandes</span></div>
+      </div>
+      <div class="fact">
+        <div class="fact-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.6 5.6 6 .7-4.5 4.1 1.2 6-5.3-3-5.3 3 1.2-6-4.5-4.1 6-.7z"/></svg>
+        </div>
+        <div class="fact-text"><span class="fact-label">Valoración</span><span class="fact-value">4.8 — 6,200+ reseñas</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="menu-section" id="menu">
+  <div class="wrap">
+    <span class="eyebrow">La carta</span>
+    <h2>Platos que cuentan de dónde venimos.</h2>
+    <div class="menu-grid">
+      <div class="dish">
+        <div class="dish-name">Chivo con chenchén</div>
+        <div class="dish-desc">Chivo guisado a fuego lento con chenchén del Sur, tal como se prepara en Baní y Azua.</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">Bandera dominicana</div>
+        <div class="dish-desc">Arroz, habichuela y tu proteína elegida — pollo, cerdo o res — con concón incluido.</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">Sancocho de siete carnes</div>
+        <div class="dish-desc">El plato de las celebraciones, servido en porción generosa para compartir en la mesa.</div>
+      </div>
+      <div class="dish">
+        <div class="dish-name">Mofongo con camarones</div>
+        <div class="dish-desc">Plátano verde majado con mantequilla de ajo y camarones salteados al momento.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="experience" id="experiencia">
+  <div class="wrap experience-grid" style="display:contents">
+    <div>
+      <span class="eyebrow">La experiencia</span>
+      <h2>Aquí no hay protocolo, hay familia.</h2>
+      <p>Ven un domingo y verás: prestamos sombrero y güira a quien se anime a bailar entre plato y plato. La idea es simple — que te sientas como en el patio de tu abuela, no en un restaurante formal.</p>
+      <p>Contamos con servicio de valet para que el parqueo nunca sea un problema, incluso en las noches más llenas.</p>
+    </div>
+    <div class="experience-visual">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="50" cy="55" rx="32" ry="14" fill="none" stroke="#1A1512" stroke-width="2.5"/>
+        <ellipse cx="50" cy="55" rx="32" ry="14" fill="#F0E9DC" opacity="0.4"/>
+        <g stroke="#1A1512" stroke-width="1.4">
+          <line x1="20" y1="53" x2="80" y2="53"/>
+          <line x1="21" y1="57" x2="79" y2="57"/>
+          <line x1="24" y1="61" x2="76" y2="61"/>
+          <line x1="19" y1="49" x2="81" y2="49"/>
+        </g>
+        <path d="M18 55 Q50 30 82 55" fill="none" stroke="#1A1512" stroke-width="2.5"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contacto">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="eyebrow">Visítanos</span>
+      <h2>Te esperamos en Villa Olga.</h2>
+      <ul class="contact-list">
+        <li><span class="label">Dirección</span><span>Av. Benito Juárez, Villa Olga, Santiago</span></li>
+        <li><span class="label">Teléfono</span><span>+1 829-816-3894</span></li>
+        <li><span class="label">Correo</span><span>campunomastergourmet@gmail.com</span></li>
+        <li><span class="label">Instagram</span><span>@campunomg</span></li>
+      </ul>
+    </div>
+    <div class="hours-box">
+      <h3>Horario</h3>
+      <div class="hours-row"><span>Lunes – Miércoles</span><span>12:00 pm – 10:00 pm</span></div>
+      <div class="hours-row"><span>Jueves</span><span>12:00 pm – 10:00 pm</span></div>
+      <div class="hours-row"><span>Viernes</span><span>12:00 pm – 11:00 pm</span></div>
+      <div class="hours-row"><span>Sábado</span><span>12:00 pm – 11:30 pm</span></div>
+      <div class="hours-row"><span>Domingo</span><span>12:00 pm – 10:00 pm</span></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>Campuno</strong> — Gastronomía del Campo Dominicano · Santiago de los Caballeros
+</footer>
+
+<div class="demo-badge">Diseño demo — no oficial</div>
+
+</body>
+</html>
